@@ -1,4 +1,5 @@
 import pygame
+from backend import SceneManager
 
 pygame.init()
 
@@ -6,7 +7,7 @@ window = pygame.display.set_mode((1600,900), pygame.RESIZABLE)
 pygame.display.set_caption('HelloWorld')
 
 screen = pygame.Surface((1920,1080))
-
+scene_manager = SceneManager()
 running = True
 is_fullscreen = False
 
@@ -23,12 +24,15 @@ while running:
                 window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.NOFRAME)
             else:
                 window = pygame.display.set_mode((1600, 900), pygame.RESIZABLE)
+        scene_manager.handle_event(event)
 
+    window.fill((0,0,25))
+
+    scene_manager.update()
+    scene_manager.draw(screen)
 
     scaled_screen = pygame.transform.smoothscale(screen, screen.get_size())
 
 
-    window.fill((0,0,25))
-    screen.fill((255,0,0))
     window.blit(screen, (0,0))
     pygame.display.flip()
